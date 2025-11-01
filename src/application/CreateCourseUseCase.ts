@@ -1,6 +1,8 @@
 import { console } from 'node:inspector/promises'
 import CourseEnitity from '../domain/enitity/CourseEnitity'
 import ICourseRepository from '../domain/IRepository/ICourseRepository'
+
+
 export default class CreateCourseUseCase {
   constructor (private courseRepository: ICourseRepository) {
     this.courseRepository = courseRepository
@@ -22,7 +24,7 @@ export default class CreateCourseUseCase {
       const course = await this.courseRepository.createCourse({
         title,
         description,
-        lecturerId: '',
+        lecturerId,
 
       })
       console.log(course)

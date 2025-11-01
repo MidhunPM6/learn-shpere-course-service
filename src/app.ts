@@ -1,7 +1,7 @@
 import express from 'express'
 import cookiePaser from 'cookie-parser'
 import {connectDB} from './infrastructure/database/config'
-import courseRoute from './presentation/routes/CourseRoute'
+import courseRoutes from './presentation/routes/CourseRoute'
 
 const app = express()
 
@@ -10,7 +10,9 @@ app.use(cookiePaser())
 
 connectDB()
 
-app.use('/course',courseRoute)
+app.use('/course', courseRoutes);
+console.log("✅ Course routes loaded successfully");
+
 
 export default app
- 
+   
