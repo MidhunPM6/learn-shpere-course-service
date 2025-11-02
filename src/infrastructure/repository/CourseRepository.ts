@@ -31,9 +31,8 @@ export default class CourseRepository implements ICourseRepository {
         .lean()
 
       if (!courses || courses.length === 0) {
-        throw new Error('No courses found for this lecturer')
+       return []
       }
-
       return courses.map((course: any) => ({
         id: course._id.toString(),
         title: course.title as string,
@@ -55,5 +54,29 @@ export default class CourseRepository implements ICourseRepository {
     } catch (error: any) {
       throw new Error(`Failed to get courses: ${error.message}`)
     }
+  }
+
+  async addLectureToCourse(courseId:string,lecture : {title :string,videoUrl :string}): Promise<void> {
+      try {
+      
+        const updatedCourse = await CourseModel.findByIdAndUpdate(
+          courseId,
+          { 
+            $push: { 
+              lectures: {
+                title: lecture.title,
+                videoUrl: lecture.videoUrl
+              }
+            } 
+          },
+          { new: true, runValidators: true }
+        )
+        
+        if (!updatedCourse) {
+          throw new Error('Course not found')
+        }
+      } catch (error: any) {
+        throw new Error(`Failed to add lecture to course: ${error.message}`)
+      }
   }
 }
