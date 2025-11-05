@@ -64,6 +64,9 @@ export default class CourseController {
 
   async addLectureToCourse(req: Request, res: Response): Promise<void> {
     const { courseId, title, videoUrl } = req.body;
+    const video = req.file as Express.MulterS3.File
+    console.log(video);
+    
     console.log(courseId);
     
     if (!courseId || !title || !videoUrl) {
@@ -71,7 +74,7 @@ export default class CourseController {
         .status(HTTP_STATUS.BAD_REQUEST)
         .json({ message: 'Missing required fields' });
       return;
-    }
+    } 
 
     try {
       await createLectureUseCase.execute(courseId,  title, videoUrl );
@@ -88,3 +91,4 @@ export default class CourseController {
     }
   }
 }
+  

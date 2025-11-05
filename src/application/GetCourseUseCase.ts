@@ -18,4 +18,4 @@ export default class GetCourseUseCase {
       throw new Error(`Failed to fetch course details: ${error.message}`)
     }
   }
-}
+}    
