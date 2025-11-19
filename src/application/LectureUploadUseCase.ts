@@ -1,7 +1,8 @@
 import VideoUploadService from '../infrastructure/services/VideoUploadSevice'
+import ICourseRepository from '../domain/IRepository/ICourseRepository'
 
 export default class LectureUploadUseCase {
-  constructor (private videoUploadService: VideoUploadService) {
+  constructor (private videoUploadService: VideoUploadService,private courseRepository :  ICourseRepository) {
     this.videoUploadService = videoUploadService
   }
   startUpload = async (fileName: string, fileType: string) => {
@@ -14,6 +15,7 @@ export default class LectureUploadUseCase {
         fileName,
         fileType
       )
+      
       if (!response) {
         throw new Error('Unable to start uploading ')
       }
@@ -53,8 +55,12 @@ export default class LectureUploadUseCase {
   completeUpload = async (
     uploadId: string,
     key: string,
-    parts: { ETag: string; PartNumber: number }[]
+    parts: { ETag: string; PartNumber: number }[],
+    title:string,
+    courseId :string,
   ) => {
+
+    
     try {
       if (!uploadId || !key || !parts) {
         throw new Error('Required all fields')
@@ -64,10 +70,18 @@ export default class LectureUploadUseCase {
         key,
         parts
       )
+
+      
       if (!response) {
         throw new Error('Uploading not completed  ')
       }
-      console.log(response)
+
+    
+      const videoUrl = response.Location
+      if (!videoUrl) {
+        throw new Error('Video upload missing location')
+      }
+      await this.courseRepository.addLectureToCourse(courseId,{title : title,videoUrl })
       return response
     } catch (error: any) {
       console.error(error)

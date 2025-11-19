@@ -11,7 +11,7 @@ export default class VideoUploadService {
   private buketName: string
   constructor () {
     this.buketName = AWS_BUCKET_NAME
-    console.log('this is bucket' + this.buketName)
+    
   }
 
   startMultipartUpload = async (fileName: string, fileType: string) => {

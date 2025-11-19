@@ -14,7 +14,7 @@ export const courseContainer = () => {
     createCourseUseCase : new CreateCourseUseCase(courseRepository),
     getCourseUseCase : new GetCourseUseCase(courseRepository),
     createLectureUseCase  : new CreateLectureUseCase(courseRepository),
-    lectureUploadUseCase : new LectureUploadUseCase(videoUploadService)
+    lectureUploadUseCase : new LectureUploadUseCase(videoUploadService,courseRepository)
     
   } 
 }

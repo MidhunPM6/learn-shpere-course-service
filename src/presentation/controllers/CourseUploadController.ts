@@ -10,7 +10,6 @@ export default class CourseUploadController {
   private buketName: string
   constructor () {
     this.buketName = AWS_BUCKET_NAME
-    console.log('this is bucket' + this.buketName)
   }
 
   startMultipartUploadController = async (req: Request, res: Response) => {
@@ -70,10 +69,11 @@ export default class CourseUploadController {
 
   completeMultipartUploadController = async (req: Request, res: Response) => {
     try {
-      const { uploadId, key, parts } = req.body
+      const { uploadId, key, parts,title,courseId } = req.body
       
-
-      if (!uploadId || !parts || !key) {
+       
+        
+      if (!uploadId || !parts || !key || !title || !courseId) {
         return res
           .status(HTTP_STATUS.NOT_FOUND)
           .json({ messgae: 'All the fields are required ' })
@@ -83,6 +83,8 @@ export default class CourseUploadController {
         uploadId,
         key,
         parts,
+        title,
+        courseId
       )
       if (!response) {
         return res

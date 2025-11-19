@@ -56,7 +56,7 @@ export default class CourseRepository implements ICourseRepository {
     }
   }
 
-  async addLectureToCourse(courseId:string,lecture : {title :string,videoUrl :string}): Promise<void> {
+  async addLectureToCourse(courseId:string,lecture : {title:string,videoUrl :string}): Promise<void> {
       try {
       
         const updatedCourse = await CourseModel.findByIdAndUpdate(
