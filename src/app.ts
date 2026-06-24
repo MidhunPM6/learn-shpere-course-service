@@ -8,7 +8,8 @@ const app = express()
 app.use(express.json())
 app.use(cookiePaser())
 
-app.use('/course', courseRoutes)
+app.use('/course', courseRoutes)    
 app.use('/api/upload', CourseuploadRoutes)
 
-export default app
+export default app       
+    
